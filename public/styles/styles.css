@@ -1,0 +1,9 @@
+html,
+body,
+.block {
+  height: 100%;
+}
+img.card-img {
+  height: 200px;
+  width: 100%;
+}

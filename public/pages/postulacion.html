@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- JQUERY-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <!-- <div class="row">
+        <div class="col s12">
+            <ul id="tabs" class="tabs">
+                <li id="s-1" class="tab col s4"><a class="active" href="#step-1">Test 1</a></li>
+                <li id="s-2" class="tab col s4 disabled"><a href="#step-2">Test 2</a></li>
+                <li id="s-3" class="tab col s4 disabled"><a href="#step-3">Disabled Tab</a></li>
+            </ul>
+        </div>
+        <div id="step-1" class="col s12">Test 1</div>
+        <div id="step-2" class="col s12">Test 2</div>
+        <div id="step-3" class="col s12">Test 3</div>
+    </div> -->
+    <div class="container ">
+
+        <br>
+        <br>
+        <br>
+
+        <form id="form-document" action="" aria-readonly="true">
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <select id="document_type" name="document_type">
+                        <option value="" disabled selected>Elije tu tipo de Documento</option>
+                        <option value="dni">DNI</option>
+                        <option value="lc">LC</option>
+                        <option value="le">LE</option>
+                        <option value="cuil">CUIL</option>
+                        <option value="cuit">CUIT</option>
+                    </select>
+                    <label>Tipo de Documento</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input placeholder="Ej: 267851235" id="document_number" type="text" class="validate">
+                    <label for="document_number">Número de Documento</label>
+                </div>
+            </div>
+            <button type="submit">Postularme</button>
+            <br>
+            <br>
+        </form>
+
+        <form id="form-personal-data" action="">
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <input placeholder="Nombre" id="personal_data_name" type="text" class="validate" disabled>
+                    <label for="document_number">Nombre</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input placeholder="Apellido" id="personal_data_last_name" type="text" class="validate" disabled>
+                    <label for="document_number">Apellido</label>
+                </div>
+                <div class="input-field col s12">
+                    <input placeholder="ejemplo@gmail.com" id="personal_data_email" type="email" class="validate"
+                        disabled>
+                    <label for="document_number">Correo</label>
+                </div>
+            </div>
+            <input type="submit" value="Validar" disabled>
+        </form>
+
+
+
+
+
+
+
+    </div>
+    <script>
+
+        //Materialize Element Initialization
+        var materializeSelect = document.querySelectorAll('select');
+        var materializeSelectInstances = M.FormSelect.init(materializeSelect);
+        //Materialize Element Initialization END
+
+        const formDocument = document.getElementById("form-document")
+
+        const formPersonalData = document.getElementById("form-personal-data")
+        const formPersonalDataInputs = formPersonalData.querySelectorAll("input")
+
+        formDocument.onsubmit = (e) => {
+            e.preventDefault()
+            call1()
+        }
+
+        formPersonalData.onsubmit = (e) => {
+            e.preventDefault()
+            call2()
+        }
+
+
+
+        function call1() {
+
+            var body = JSON.stringify({
+                document_type: formDocument.document_type.value,
+                document_number: formDocument.document_number.value
+            })
+
+            fetch('/validate/dni', {
+                method: "POST",
+                body: body,
+                headers: { "Content-type": "application/json; charset=UTF-8" }
+            })
+                .then(response => response.json())
+                .then(json => {
+                    if (json.errors) {
+                        console.warn(json.errors)
+                    } else {
+                        if (!json.exist) {
+                            formPersonalDataInputs.forEach(input => input.removeAttribute("disabled"))
+                        }
+                    }
+                })
+                .catch(err => console.warn(err))
+        }
+
+        function call2() {
+
+            var body = JSON.stringify({
+                personal_data_name: formPersonalData.personal_data_name.value,
+                personal_data_last_name: formPersonalData.personal_data_last_name.value,
+                personal_data_email: formPersonalData.personal_data_email.value
+            })
+
+            fetch('/validate/datos-presonales', {
+                method: "POST",
+                body: body,
+                headers: { "Content-type": "application/json; charset=UTF-8" }
+            })
+                .then(response => response.json())
+                .then(json => {
+                    if (json.errors) {
+                        console.warn(json.errors)
+                    } else {
+                        if (!json.exist) {
+                            formPersonalDataInputs.forEach(input => input.removeAttribute("disabled"))
+                        }
+                    }
+                })
+                .catch(err => console.warn(err))
+        }
+
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const job = urlParams.get('a')
+        console.log(queryString, job);
+
+
+    </script>
+</body>
+
+</html>
