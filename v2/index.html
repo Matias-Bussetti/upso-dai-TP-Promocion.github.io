@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Postulación</title>
-    <link rel="stylesheet" href="./styles.css">k
+    <link rel="stylesheet" href="./styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
@@ -20,7 +20,7 @@
 
                 <div class="col-12 col-md-4 mb-3">
                     <label for="document_type">Tipo de Documento</label>
-                    <select id="document_type" class="form-select">
+                    <select id="document_type" name="document_type" class="form-select">
                         <option selected disabled>Elije tu tipo de Documento</option>
                         <option value="dni">DNI</option>
                         <option value="lc">LC</option>
@@ -32,7 +32,8 @@
 
                 <div class="col-12 col-md-4 mb-3">
                     <label for="document_number">Número de Documento</label>
-                    <input id="document_number" type="number" placeholder="Número de Documento" class="form-control">
+                    <input id="document_number" name="document_number" type="number" placeholder="Número de Documento"
+                        class="form-control">
                 </div>
 
                 <div class="col-12 col-md-4 mb-3">
@@ -49,51 +50,54 @@
 
                 <div class="col-12 col-md-6 mb-3">
                     <label for="name">Nombre</label>
-                    <input type="text" placeholder="Número de Documento" class="form-control" disabled>
+                    <input id="name" name="personal_name" type="text" placeholder="Nombre" class="form-control"
+                        disabled>
                 </div>
 
                 <div class="col-12 col-md-6 mb-3">
                     <label for="last_name">Apellido</label>
-                    <input id="last_name" type="text" placeholder="Número de Documento" class="form-control" disabled>
+                    <input id="last_name" name="personal_last_name" type="text" placeholder="Apellido"
+                        class="form-control" disabled>
                 </div>
 
                 <div class="col-12 mb-3">
                     <label for="email">Email</label>
-                    <input id="email" name="email" type="email" placeholder="ejemplo@gmail.com" class="form-control"
-                        disabled>
+                    <input id="email" name="personal_email" type="email" placeholder="ejemplo@gmail.com"
+                        class="form-control" disabled>
                 </div>
 
                 <div class="col-12 mb-3">
                     <label for="job">Puesto de Trabajo</label>
                     <select id="job" class="form-select" disabled>
-                        <option value="frontend">frontend</option>
-                        <option value="backend">backend</option>
-                        <option value="marketing">marketing</option>
-                        <option value="devops">devops</option>
-                        <option value="diseñador">diseñador</option>
+                        <option selected disabled>Elije tu puesto de trabajo Deseado</option>
+                        <option value="frontend">frontend 1</option>
+                        <option value="backend">backend 2</option>
+                        <option value="marketing">marketing 3</option>
+                        <option value="devops">devops 4</option>
+                        <option value="diseñador">diseñador 5</option>
                     </select>
                 </div>
 
             </div>
 
             <!-- SUBIR IMAGEN -->
-            <div id="personal-image" class="row mb-3 pt-3">
+            <div class="row mb-3 pt-3">
                 <div class="mb-3">
-                    <label for="inputGroupFile01" class="form-label">Subir Foto de Perfil</label>
-                    <input type="file" class="form-control" id="inputGroupFile01" accept="image/jpeg, image/png"
-                        disabled>
+                    <label for="personal-image" class="form-label">Subir Foto de Perfil</label>
+                    <input id="personal-image" name="personal_image" type="file" class="form-control"
+                        accept="image/jpeg, image/png" disabled>
                     <br>
                     <img src="https://via.placeholder.com/300" class="rounded mx-auto d-block" alt="...">
                 </div>
             </div>
 
             <!-- SUBIR CV -->
-            <div id="personal-cv" class="row mb-3 pt-3">
+            <div class="row mb-3 pt-3">
                 <div class="mb-3">
                     <div class="mb-3">
-                        <label for="inputGroupFile02" class="form-label">Subir Curriculum Vitae</label>
-                        <input id="inputGroupFile02" type="file" class="form-control" accept="image/jpeg, image/png"
-                            disabled>
+                        <label for="personal-cv" class="form-label">Subir Curriculum Vitae</label>
+                        <input id="personal-cv" name="personal_cv" type="file" class="form-control"
+                            accept="application/pdf" disabled>
                     </div>
                     <div class="d-flex">
                         <!-- <iframe class="col-10 col-md-8"
@@ -116,14 +120,125 @@
         crossorigin="anonymous"></script>
 
     <script>
+        window.onload = () => {
 
-        form = document.getElementById("form")
-        form.onsubmit = (e) => e.preventDefault()
+            form = document.getElementById("form")
+            form.onsubmit = (e) => {
+                e.preventDefault()
+                submit()
+            }
 
-        console.log(document.querySelector("div#personal-data > input"));
+            personalDataInputs = document.querySelectorAll("div#personal-data input, div#personal-data select");
+            personalImage = document.getElementById("personal-image");
+            personalCV = document.getElementById("personal-cv");
+
+            validateButton = document.getElementById("validate-document");
+
+            validateButton.onclick = (e) => {
+                // es una variable porque se modifica en la llamada		
+                var init = {
+                    method: 'POST'
+                };
+
+                var perfil = new FormData(form);
+                init.body = perfil;
+
+                var url = "./server/code/validateDocument.php";
+                var req = new Request(url, init);
+
+                fetch(req)
+                    .then(recuperar)
+                    .then(mostrar)
+                    .catch(error);
+
+                function recuperar(rta) {
+                    return rta.json();
+                }
+
+                function mostrar(dato) {
+                    if (!dato.exist) {
+                        personalDataInputs.forEach(input => {
+                            input.removeAttribute("disabled")
+                            input.onchange = () => a()
+                        });
+
+                    } else {
+
+                    }
+                    //console.table(dato);
+                }
+
+                function error(e) {
+                    /* manejar errores */
+                    console.error(e);
+                }
+            }
+
+            function submit() {
+                // es una variable porque se modifica en la llamada		
+                var init = {
+                    method: 'POST'
+                };
+
+                var perfil = new FormData(form);
+                init.body = perfil;
+
+                console.log(Array.from(perfil))
+
+                var url = "./server/code/postulation.php";
+                var req = new Request(url, init);
+
+                fetch(req)
+                    .then(recuperar)
+                    .then(mostrar)
+                    .catch(error);
+
+                function recuperar(rta) {
+                    return rta.json();
+                }
+
+                function mostrar(dato) {
+                    if (!dato.exist) {
+                        personalDataInputs.forEach(input => {
+                            input.removeAttribute("disabled")
+                            input.onchange = () => a()
+                        });
+
+                    } else {
+
+                    }
+                    //console.table(dato);
+                }
+
+                function error(e) {
+                    /* manejar errores */
+                    console.error(e);
+                }
+            }
+
+            function a() {
+
+                const isNotEmpty = (input) => input.value !== ""
+                const firstOptionNotSelected = (select) => select.selectedIndex !== 0
+
+                const condition = isNotEmpty(personalDataInputs[0]) && isNotEmpty(personalDataInputs[1]) && isNotEmpty(personalDataInputs[2]) && isNotEmpty(personalDataInputs[3]) && firstOptionNotSelected(personalDataInputs[3])
+
+                if (condition) {
+                    console.log("ahora si");
+                    personalImage.removeAttribute("disabled")
+                    personalImage.onchange = () => b()
+                }
+
+            }
+
+            function b() {
+                console.log("b");
+                personalCV.removeAttribute("disabled")
+            }
 
 
 
+        }
 
     </script>
 </body>
