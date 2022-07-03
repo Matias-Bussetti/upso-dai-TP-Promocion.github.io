@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postulación</title>
+    <link rel="stylesheet" href="./styles.css">k
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+    <form id="form" action="" class="mt-5">
+        <div class="container">
+
+            <!-- DOCUMENTO -->
+            <div id="personal-document" class="row mb-3 pt-3">
+
+                <div class="col-12 col-md-4 mb-3">
+                    <label for="document_type">Tipo de Documento</label>
+                    <select id="document_type" class="form-select">
+                        <option selected disabled>Elije tu tipo de Documento</option>
+                        <option value="dni">DNI</option>
+                        <option value="lc">LC</option>
+                        <option value="le">LE</option>
+                        <option value="cuil">CUIL</option>
+                        <option value="cuit">CUIT</option>
+                    </select>
+                </div>
+
+                <div class="col-12 col-md-4 mb-3">
+                    <label for="document_number">Número de Documento</label>
+                    <input id="document_number" type="number" placeholder="Número de Documento" class="form-control">
+                </div>
+
+                <div class="col-12 col-md-4 mb-3">
+                    <br>
+                    <button class="btn btn-primary w-100 " type="button" id="validate-document">Validar
+                        Documento</button>
+                </div>
+
+            </div>
+
+
+            <!-- NOMBRE APELLIDO Y CORREO -->
+            <div id="personal-data" class="row mb-3 pt-3">
+
+                <div class="col-12 col-md-6 mb-3">
+                    <label for="name">Nombre</label>
+                    <input type="text" placeholder="Número de Documento" class="form-control" disabled>
+                </div>
+
+                <div class="col-12 col-md-6 mb-3">
+                    <label for="last_name">Apellido</label>
+                    <input id="last_name" type="text" placeholder="Número de Documento" class="form-control" disabled>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" placeholder="ejemplo@gmail.com" class="form-control"
+                        disabled>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label for="job">Puesto de Trabajo</label>
+                    <select id="job" class="form-select" disabled>
+                        <option value="frontend">frontend</option>
+                        <option value="backend">backend</option>
+                        <option value="marketing">marketing</option>
+                        <option value="devops">devops</option>
+                        <option value="diseñador">diseñador</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <!-- SUBIR IMAGEN -->
+            <div id="personal-image" class="row mb-3 pt-3">
+                <div class="mb-3">
+                    <label for="inputGroupFile01" class="form-label">Subir Foto de Perfil</label>
+                    <input type="file" class="form-control" id="inputGroupFile01" accept="image/jpeg, image/png"
+                        disabled>
+                    <br>
+                    <img src="https://via.placeholder.com/300" class="rounded mx-auto d-block" alt="...">
+                </div>
+            </div>
+
+            <!-- SUBIR CV -->
+            <div id="personal-cv" class="row mb-3 pt-3">
+                <div class="mb-3">
+                    <div class="mb-3">
+                        <label for="inputGroupFile02" class="form-label">Subir Curriculum Vitae</label>
+                        <input id="inputGroupFile02" type="file" class="form-control" accept="image/jpeg, image/png"
+                            disabled>
+                    </div>
+                    <div class="d-flex">
+                        <!-- <iframe class="col-10 col-md-8"
+                    src='https://pdfjs-express.s3-us-west-2.amazonaws.com/docs/choosing-a-pdf-viewer.pdf'
+                    height="678"> -->
+                    </div>
+                </div>
+            </div>
+
+
+
+            <button type="submit">Postularme</button>
+
+        </div>
+    </form>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script>
+
+        form = document.getElementById("form")
+        form.onsubmit = (e) => e.preventDefault()
+
+        console.log(document.querySelector("div#personal-data > input"));
+
+
+
+
+    </script>
+</body>
+
+</html>

@@ -21,19 +21,6 @@
 
 <body>
 
-
-    <!-- <div class="row">
-        <div class="col s12">
-            <ul id="tabs" class="tabs">
-                <li id="s-1" class="tab col s4"><a class="active" href="#step-1">Test 1</a></li>
-                <li id="s-2" class="tab col s4 disabled"><a href="#step-2">Test 2</a></li>
-                <li id="s-3" class="tab col s4 disabled"><a href="#step-3">Disabled Tab</a></li>
-            </ul>
-        </div>
-        <div id="step-1" class="col s12">Test 1</div>
-        <div id="step-2" class="col s12">Test 2</div>
-        <div id="step-3" class="col s12">Test 3</div>
-    </div> -->
     <div class="container ">
 
         <br>
@@ -82,8 +69,18 @@
             <input type="submit" value="Validar" disabled>
         </form>
 
-
-
+        <form id="form-personal-image" action="">
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>File</span>
+                    <input type="file" accept="image/jpeg, image/png" disabled>
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+            <input type="submit" value="Validar" disabled>
+        </form>
 
 
 
@@ -101,6 +98,9 @@
         const formPersonalData = document.getElementById("form-personal-data")
         const formPersonalDataInputs = formPersonalData.querySelectorAll("input")
 
+        const formPersonalImage = document.getElementById("form-personal-image")
+        const formPersonalImageInputs = formPersonalImage.querySelectorAll("input")
+
         formDocument.onsubmit = (e) => {
             e.preventDefault()
             call1()
@@ -109,6 +109,11 @@
         formPersonalData.onsubmit = (e) => {
             e.preventDefault()
             call2()
+        }
+
+        formPersonalImage.onsubmit = (e) => {
+            e.preventDefault()
+            call3()
         }
 
 
@@ -156,8 +161,32 @@
                     if (json.errors) {
                         console.warn(json.errors)
                     } else {
-                        if (!json.exist) {
-                            formPersonalDataInputs.forEach(input => input.removeAttribute("disabled"))
+                        if (json.correct) {
+                            formPersonalImageInputs.forEach(input => input.removeAttribute("disabled"))
+                        }
+                    }
+                })
+                .catch(err => console.warn(err))
+        }
+
+        function call3() {
+
+            var body = JSON.stringify({
+                personal_image: formPersonalImage.personal_data_name.value,
+            })
+
+            fetch('/validate/datos-presonales', {
+                method: "POST",
+                body: body,
+                headers: { "Content-type": "application/json; charset=UTF-8" }
+            })
+                .then(response => response.json())
+                .then(json => {
+                    if (json.errors) {
+                        console.warn(json.errors)
+                    } else {
+                        if (json.correct) {
+                            formPersonalImageInputs.forEach(input => input.removeAttribute("disabled"))
                         }
                     }
                 })
