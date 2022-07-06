@@ -12,9 +12,10 @@ $request = $_POST;
 $validationInputs = [
     'document_type' => "select",
     'document_number' => "text",
-    'personal_name' => "text",
-    'personal_last_name' => "text",
-    'personal_email' => "text",
+    'name' => "text",
+    'last_name' => "text",
+    'email' => "text",
+    'job' => "select",
 ];
 $validationFiles = [
     'personal_image',
@@ -28,7 +29,7 @@ $validateFiles = Validator::validateFile($_FILES, $validationFiles);
 // echo "\n" . $validation["result"] ? "Y" : "N";
 // echo "\n" . $validateFiles["result"] ? "Y" : "N";
 
-if ($validation["result"] && $validateFiles["result"]) {
+if ($validateInputs["result"] && $validateFiles["result"]) {
 
     $document_type = $request['document_type'];
     $document_number = $request['document_number'];
@@ -36,10 +37,22 @@ if ($validation["result"] && $validateFiles["result"]) {
 
     $fileName = $document_type . "_" . $document_number . ".json";
 
+    try {
+        // call a success/error/progress handler
+        FileSystem::createJsonFile($fileName, json_encode($validateInputs["inputs"]), "postulantes");
+    } catch (\Throwable $e) { // For PHP 7
+        print_r($e);
+    }
 
     if (FileSystem::checkInFolderIfExistWithName("postulantes", $fileName)) {
         $data["exist"] = true;
         $data["data"] = FileSystem::returnJsonFromFile("postulantes", $fileName);
+
+        FileSystem::saveFileFromTemp("fotos", "personal_image");
+
+        FileSystem::saveFileFromTemp("curriculums", "personal_cv");
+
+        $data["aaaa"] = true;
     } else {
         $data["exist"] = false;
     }

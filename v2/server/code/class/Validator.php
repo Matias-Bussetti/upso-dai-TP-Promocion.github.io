@@ -21,6 +21,8 @@ class Validator
 
                             break;
                     }
+                } else {
+                    $validation["inputs"][$input] = $requestArray[$input];
                 }
             } else {
 
@@ -36,13 +38,19 @@ class Validator
     {
         $validation["result"] = true;
 
+        print_r($fileArray);
+
         //print_r($fileArray);
         //echo "\n";
         foreach ($fileNameArray as $file) {
             //print_r($file);
             //echo "\n";
 
-            if (isset($fileArray[$file])) {
+            if (isset($fileArray[$file]["name"])) {
+                //$fileArray[$file]["name"] = "asdasd.asdasdas";
+
+
+
             } else {
 
                 $validation["result"] = false;
