@@ -7,8 +7,14 @@ class FileSystem
         "curriculums" => "./../../server/curriculums",
         "fotos" => "./../../server/fotos",
         "postulantes" => "./../../server/postulantes",
-        //"postulantes" => "./../server/postulantes",
     ];
+
+    private static $_errorMsg =
+    [
+        "move_upload_fail" => "El archivo no se guardo, error al mover el archivo del temp a la carpeta. Compruebe la configuración del servidor",
+    ];
+
+
 
     public static function returnJsonFromFile($folderName, $fileName)
     {
@@ -30,7 +36,7 @@ class FileSystem
         return in_array($fileName, $myfiles);
     }
 
-    public static function createJsonFile($fileName, $jsonData, $folderName)
+    public static function createJsonFile($folderName, $fileName, $jsonData)
     {
         // creo el archivo con los datos de la persona
 
@@ -39,30 +45,30 @@ class FileSystem
         fclose($archivo);            // cierro el archivo
     }
 
-    public static function saveFileFromTemp($folderName, $index, $newName = "")
+    public static function saveFileFromTemp($folderName, $index, $newName)
     {
+        $return["error"] = true;
 
-        /*
-        foreach ($_FILES["pictures"]["error"] as $key => $error) {
-            if ($_FILES[$index]["error"] == UPLOAD_ERR_OK) {
-                $tmp_name = $_FILES["pictures"]["tmp_name"][$key];
-                // basename() may prevent filesystem traversal attacks;
-                // further validation/sanitation of the filename may be appropriate
-                $name = basename($_FILES["pictures"]["name"][$key]);
-                move_uploaded_file($tmp_name, "$uploads_dir/$name");
-            }
-        */
+        $file = $_FILES[$index];
 
-        //print_r($_FILES[$index]);
+        $extencion = substr($file["name"], strripos($file["name"], "."));
 
-        echo is_uploaded_file($_FILES[$index]["tmp_name"]) ? "S" : "N";
+        $fileName = $newName . $extencion;
 
-        echo "\n " . basename($_FILES[$index]["tmp_name"]);
+        $uploadFilePath = realpath(self::$_folders[$folderName]) . "/" . $fileName;
 
-        echo "\n " . move_uploaded_file($_FILES[$index]["tmp_name"], "/" . $_FILES[$index]["name"]) ? "\nY" : "\nN";
-        exit;
-        //move_uploaded_file($_FILES[$index]["tmp_name"], self::$_folders[$folderName]);
-        //print_r($_FILES[$index]["tmp_name"] . "\n");
-        //print_r(self::$_folders[$folderName] . "\n");
+        //Probar que falle la subida del archivo
+        //if (false) {
+        if (move_uploaded_file($file["tmp_name"], $uploadFilePath)) {
+            $pathUrl = substr($_SERVER['REQUEST_URI'], 0, strripos($_SERVER['REQUEST_URI'], "code/postulation.php"));
+            $path = $pathUrl . $folderName . "/" . $fileName;
+
+            $return["path"] = $path;
+            $return["error"] = false;
+        } else {
+            $return["errors"][$index] = self::$_errorMsg["move_upload_fail"];
+        }
+
+        return $return;
     }
 }

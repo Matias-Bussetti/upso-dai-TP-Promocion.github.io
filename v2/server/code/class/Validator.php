@@ -1,28 +1,51 @@
 <?php
 class Validator
 {
-    public static function validateRequest($requestArray, $inputNameArray)
+    private static $_errorMsg =
+    [
+        "file_upload_error" => "El archivo no se subio correctamente, pruebe denuevo",
+        "select_error" => "Elija una Opción",
+        "input_empty_error" => "Campo Vacio",
+    ];
+
+    public static function validate($validateArray, $typesArray)
     {
         $validation["result"] = true;
 
-        foreach ($inputNameArray as $input => $type) {
+        foreach ($typesArray as $input => $type) {
+            if (str_contains($type, "file")) {
 
-            if (isset($requestArray[$input])) {
+                $file = $_FILES[$input];
 
-                if ($requestArray[$input] == "" || $requestArray[$input] == null) {
-                    $validation["result"] = false;
-                    switch ($type) {
-                        case 'select':
-                            $validation["errors"][$input] = "Elija una Opción";
-                            break;
-
-                        default:
-                            $validation["errors"][$input] = "Campo Vacio";
-
-                            break;
+                if (!is_uploaded_file($file["tmp_name"])) {
+                    if (str_contains($type, "require")) {
+                        $validation["result"] = false;
+                        $validation["errors"][$input] = self::$_errorMsg["file_upload_error"];
+                    } else {
+                        $validation["inputs"][$input] = null;
                     }
                 } else {
-                    $validation["inputs"][$input] = $requestArray[$input];
+                    $validation["inputs"][$input] = "uploaded";
+                }
+            } elseif (isset($validateArray[$input])) {
+
+                if ($validateArray[$input] == "" || $validateArray[$input] == null) {
+
+                    if (str_contains($type, "require")) {
+
+                        $validation["result"] = false;
+
+                        if (str_contains($type, 'select')) {
+                            $validation["errors"][$input] = self::$_errorMsg["select_error"];
+                        } else {
+                            //Type = text
+                            $validation["errors"][$input] = self::$_errorMsg["input_empty_error"];
+                        }
+                    } else {
+                        $validation["inputs"][$input] = null;
+                    }
+                } else {
+                    $validation["inputs"][$input] = $validateArray[$input];
                 }
             } else {
 
@@ -31,38 +54,9 @@ class Validator
             }
         }
 
-        return $validation;
-    }
-
-    public static function validateFile($fileArray, $fileNameArray)
-    {
-        $validation["result"] = true;
-
-        print_r($fileArray);
-
-        //print_r($fileArray);
-        //echo "\n";
-        foreach ($fileNameArray as $file) {
-            //print_r($file);
-            //echo "\n";
-
-            if (isset($fileArray[$file]["name"])) {
-                //$fileArray[$file]["name"] = "asdasd.asdasdas";
-
-
-
-            } else {
-
-                $validation["result"] = false;
-                $validation["errors"][$file] = "Elija un Archivo";
-                /*
-                */
-            }
+        if (!$validation["result"]) {
+            unset($validation["inputs"]);
         }
-
-        //echo $validation["result"] ? "S" : "N";
-        //echo "\n";
-
         return $validation;
     }
 }

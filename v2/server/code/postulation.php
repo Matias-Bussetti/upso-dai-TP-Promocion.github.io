@@ -9,57 +9,103 @@ $data = json_decode($json);
 
 $request = $_POST;
 
-$validationInputs = [
-    'document_type' => "select",
-    'document_number' => "text",
-    'name' => "text",
-    'last_name' => "text",
-    'email' => "text",
-    'job' => "select",
-];
-$validationFiles = [
-    'personal_image',
-    'personal_cv',
+$typesArray = [
+    'document_type' => "select|require",
+    'document_number' => "text|require",
 ];
 
-$validateInputs = Validator::validateRequest($request, $validationInputs);
-$validateFiles = Validator::validateFile($_FILES, $validationFiles);
+$validateInputs = Validator::validate($request, $typesArray);
 
-//echo $validateFiles;
-// echo "\n" . $validation["result"] ? "Y" : "N";
-// echo "\n" . $validateFiles["result"] ? "Y" : "N";
+//Validar Documento
+if ($validateInputs["result"]) {
 
-if ($validateInputs["result"] && $validateFiles["result"]) {
+    $fileName = $request['document_type'] . "_" . $request['document_number'];
+    $fileNameJson = $fileName . ".json";
 
-    $document_type = $request['document_type'];
-    $document_number = $request['document_number'];
+    //Me fijo si ya se habia ingresado
+    $typesArray = [
+        'document_type' => "select|require",
+        'document_number' => "text|require",
+        'name' => "text|require",
+        'last_name' => "text|require",
+        'email' => "text|require",
+        'job' => "select|require",
+    ];
 
 
-    $fileName = $document_type . "_" . $document_number . ".json";
-
-    try {
-        // call a success/error/progress handler
-        FileSystem::createJsonFile($fileName, json_encode($validateInputs["inputs"]), "postulantes");
-    } catch (\Throwable $e) { // For PHP 7
-        print_r($e);
-    }
-
-    if (FileSystem::checkInFolderIfExistWithName("postulantes", $fileName)) {
-        $data["exist"] = true;
-        $data["data"] = FileSystem::returnJsonFromFile("postulantes", $fileName);
-
-        FileSystem::saveFileFromTemp("fotos", "personal_image");
-
-        FileSystem::saveFileFromTemp("curriculums", "personal_cv");
-
-        $data["aaaa"] = true;
+    //Si ya existe un registro no requiero que los archivos se suban denuevo!
+    if (FileSystem::checkInFolderIfExistWithName("postulantes", $fileNameJson)) {
+        $typesArray['personal_image'] = "file";
+        $typesArray['personal_cv'] = "file";
     } else {
-        $data["exist"] = false;
+        $typesArray['personal_image'] = "select|require";
+        $typesArray['personal_cv'] = "select|require";
     }
 
-    Response::response($data);
+    //Valido Denuevo
+    $validateInputs = Validator::validate($request, $typesArray);
+
+    //Si salio bien
+    if ($validateInputs["result"]) {
+
+        $validateInputsImg = $validateInputs["inputs"]["personal_image"];
+        $validateInputsCv = $validateInputs["inputs"]["personal_cv"];
+
+        $error["result"] = true;
+
+
+        //Si la img se valido y esta el archivo entoces
+        if ($validateInputsImg == "uploaded") {
+            $upload_img = FileSystem::saveFileFromTemp("fotos", "personal_image", $fileName);
+            //Si la imagen tuvo un error en la subida, Entoces
+            if ($upload_img["error"]) {
+                $error["result"] = false;
+                $error["errors"]["personal_image"] = $upload_img["errors"]["personal_image"];
+            }
+        }
+
+        //Si el cv se valido y esta el archivo entoces
+        if ($validateInputsCv == "uploaded") {
+            $upload_cv = FileSystem::saveFileFromTemp("curriculums", "personal_cv", $fileName);
+            //Si la imagen tuvo un error en la subida, Entoces
+            if ($upload_cv["error"] == "uploaded") {
+                $error["result"] = false;
+                $error["errors"]["personal_cv"] = $upload_cv["errors"]["personal_cv"];
+            }
+        }
+
+        //Si los archivos se subieron correctamente
+        if ($error["result"]) {
+
+            $validateInputs["inputs"]["personal_image"] = $upload_cv["path"];
+            $validateInputs["inputs"]["personal_cv"] = $upload_cv["path"];
+
+            FileSystem::createJsonFile("postulantes", $fileNameJson, json_encode($validateInputs["inputs"]));
+
+            Response::response(["result" => true], 201);
+        } else {
+            //Si los archivos no se subieron correctamente
+            Response::response($error);
+        }
+    } else {
+        //Si algun input estan mal
+        Response::response($validateInputs);
+    }
 } else {
-    Response::response(["errors" => $validateInputs["errors"], "errors" => $validateFiles["errors"]]);
+    //Si document_type y document_number estan mal
+    Response::response($validateInputs);
 }
+
+
+
+
+//TODO Si el documento ya existen no es necesario que se compruebe si hay imagen
+
+
+
+
+
+
+
 
 exit();

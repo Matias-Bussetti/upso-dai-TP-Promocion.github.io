@@ -8,7 +8,10 @@ $json = file_get_contents('php://input');
 $data = json_decode($json);
 
 $request = $_POST;
-$validation = Validator::validateRequest($request, ['document_type' => "select", 'document_number' => "text"]);
+
+$typesArray =  ['document_type' => "select", 'document_number' => "text"];
+
+$validation = Validator::validate($request, $typesArray);
 
 if ($validation["result"]) {
 
@@ -28,7 +31,7 @@ if ($validation["result"]) {
 
     Response::response($data);
 } else {
-    Response::response(["errors" => $validation["errors"]]);
+    Response::response($validation);
 }
 
 exit();
