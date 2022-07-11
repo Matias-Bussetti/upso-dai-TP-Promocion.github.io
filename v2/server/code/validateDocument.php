@@ -9,11 +9,12 @@ $data = json_decode($json);
 
 $request = $_POST;
 
-$typesArray =  ['document_type' => "select", 'document_number' => "text"];
+$typesArray =  ['document_type' => "select|require", 'document_number' => "text|require"];
 
 $validation = Validator::validate($request, $typesArray);
 
 if ($validation["result"]) {
+    $data["result"] = $validation["result"];
 
     $document_type = $request['document_type'];
     $document_number = $request['document_number'];

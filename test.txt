@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <form id="form" action="" class="mt-5 needs-validation">
+    <form id="form" action="" class="mt-5">
         <div class="container">
 
             <!-- DOCUMENTO -->
@@ -44,13 +44,18 @@
 
                 <div class="col-12 col-md-4 mb-3">
                     <br>
-                    <button class="btn btn-primary w-100 " type="button" id="validate-document">Validar
+                    <button class="btn btn-primary w-100" type="submit">Validar
                         Documento</button>
                 </div>
 
             </div>
 
 
+        </div>
+    </form>
+
+    <form id="form" action="" class="mt-5">
+        <div class="container">
             <!-- NOMBRE APELLIDO Y CORREO -->
             <div id="personal-data" class="row mb-3 pt-3">
 
@@ -58,16 +63,15 @@
                     <label for="name">Nombre</label>
                     <input id="name" name="name" type="text" placeholder="Nombre" class="form-control" disabled>
                 </div>
-
                 <div class="col-12 col-md-6 mb-3">
                     <label for="last_name">Apellido</label>
-                    <input id="last_name" name="last_name" type="text" placeholder="Apellido" class="form-control "
+                    <input id="last_name" name="last_name" type="text" placeholder="Apellido" class="form-control"
                         disabled>
                 </div>
 
                 <div class="col-12 mb-3">
                     <label for="email">Email</label>
-                    <input id="email" name="email" type="email" placeholder="ejemplo@gmail.com" class="form-control "
+                    <input id="email" name="email" type="email" placeholder="ejemplo@gmail.com" class="form-control"
                         disabled>
                 </div>
 
@@ -82,11 +86,16 @@
                         <option value="diseñador">diseñador 5</option>
                     </select>
                 </div>
-                <div class="col-12 col-md-4 mb-3">
-                    <button class="btn btn-primary w-100 " type="button" id="validate-step-1">Siguiente Paso</button>
-                </div>
-            </div>
 
+            </div>
+            <div class="col-12 mb-3">
+                <button class="btn btn-primary w-100" type="submit">Siguiente Paso</button>
+            </div>
+        </div>
+    </form>
+
+    <form id="form" action="" class="mt-5">
+        <div class="container">
             <!-- SUBIR IMAGEN -->
             <div class="row mb-3 pt-3">
                 <div class="mb-3">
@@ -97,11 +106,16 @@
                     <img id="personal-image-container" src="https://via.placeholder.com/300?text=Imágen"
                         class="col-10 col-md-8 rounded mx-auto d-block" alt="...">
                 </div>
-                <div class="col-12 col-md-4 mb-3">
-                    <button class="btn btn-primary w-100 " type="button" id="validate-step-2">Siguiente Paso</button>
-                </div>
+            </div>
+            <div class="col-12 mb-3">
+                <button class="btn btn-primary w-100" type="submit">Siguiente Paso</button>
             </div>
 
+        </div>
+    </form>
+
+    <form id="form" action="" class="mt-5">
+        <div class="container">
             <!-- SUBIR CV -->
             <div class="row mb-3 pt-3">
                 <div class="mb-3">
@@ -115,16 +129,17 @@
                             src='https://via.placeholder.com/624x678?text=PDF' height="678"></iframe>
                     </div>
                 </div>
-
             </div>
-
             <div class="col-12 mb-3">
-                <button class="btn btn-primary w-100 " type="submit">Postularme</button>
+                <button class="btn btn-primary w-100" type="submit">Postularme</button>
             </div>
-
 
         </div>
     </form>
+
+
+
+
 
 
 
