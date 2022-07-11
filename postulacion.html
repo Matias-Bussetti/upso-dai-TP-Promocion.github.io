@@ -21,8 +21,8 @@
     <form id="form" action="" class="mt-5 needs-validation">
         <div class="container">
 
-            <!-- DOCUMENTO -->
-            <div id="personal-document" class="row mb-3 pt-3">
+            <!-- DOCUMENTO y NOMBRE APELLIDO Y CORREO -->
+            <div class="row mb-3 pt-3">
 
                 <div class="col-12 col-md-6 mb-3">
                     <label for="document_type">Tipo de Documento</label>
@@ -46,42 +46,30 @@
                     </div>
                 </div>
 
-
-
-
-
-            </div>
-
-
-            <!-- NOMBRE APELLIDO Y CORREO -->
-            <div id="personal-data" class="row mb-3 pt-3">
-
                 <div class="col-12 col-md-6 mb-3">
                     <label for="name">Nombre</label>
-                    <input id="name" name="name" type="text" placeholder="Nombre" class="form-control" disabled>
+                    <input id="name" name="name" type="text" placeholder="Nombre" class="form-control">
                     <div class="invalid-feedback">
                     </div>
                 </div>
 
                 <div class="col-12 col-md-6 mb-3">
                     <label for="last_name">Apellido</label>
-                    <input id="last_name" name="last_name" type="text" placeholder="Apellido" class="form-control "
-                        disabled>
+                    <input id="last_name" name="last_name" type="text" placeholder="Apellido" class="form-control ">
                     <div class="invalid-feedback">
                     </div>
                 </div>
 
                 <div class="col-12 mb-3">
                     <label for="email">Email</label>
-                    <input id="email" name="email" type="email" placeholder="ejemplo@gmail.com" class="form-control "
-                        disabled>
+                    <input id="email" name="email" type="email" placeholder="ejemplo@gmail.com" class="form-control ">
                     <div class="invalid-feedback">
                     </div>
                 </div>
 
                 <div class="col-12 mb-3">
                     <label for="job">Puesto de Trabajo</label>
-                    <select id="job" name="job" class="form-select" disabled>
+                    <select id="job" name="job" class="form-select">
                         <option selected disabled value="null">Elije tu puesto de trabajo Deseado</option>
                         <option value="frontend">frontend 1</option>
                         <option value="backend">backend 2</option>
@@ -93,7 +81,7 @@
                     </div>
                 </div>
                 <div class="col-12 mb-3">
-                    <button class="btn btn-primary w-100 " type="button" id="validate-step-1" disabled>Siguiente
+                    <button class="btn btn-primary w-100 " type="button" id="validate-step-1">Siguiente
                         Paso</button>
                 </div>
             </div>
@@ -106,8 +94,8 @@
                         accept="image/jpeg, image/png" disabled>
                     <div class="invalid-feedback">
                     </div><br>
-                    <img id="personal-image-container" src="https://via.placeholder.com/300?text=Imágen"
-                        class="col-10 col-md-8 rounded mx-auto d-block" alt="...">
+                    <img id="personal-image-container" src=""
+                        class="col-10 col-md-8 rounded mx-auto bg-secondary d-block" alt="...">
                 </div>
                 <div class="col-12 col-md-4 mb-3">
                     <button class="btn btn-primary w-100 " type="button" id="validate-step-2" disabled>Siguiente
@@ -126,8 +114,8 @@
                         </div>
                     </div>
                     <div class="d-flex">
-                        <iframe id="personal-cv-container" class="col-10 col-md-8 iframe rounded"
-                            src='https://via.placeholder.com/624x678?text=PDF' height="678"></iframe>
+                        <iframe id="personal-cv-container" class="col-10 col-md-8 iframe bg-secondary rounded" src=''
+                            height="678"></iframe>
                     </div>
                 </div>
 

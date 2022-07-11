@@ -41,7 +41,7 @@ class FileSystem
         // creo el archivo con los datos de la persona
 
         $archivo = fopen(self::$_folders[$folderName] . "/" . $fileName, "w");
-        fwrite($archivo, $jsonData);    // grabo los datos en el archivo
+        fwrite($archivo, json_encode($jsonData));    // grabo los datos en el archivo
         fclose($archivo);            // cierro el archivo
     }
 
@@ -60,9 +60,8 @@ class FileSystem
         //Probar que falle la subida del archivo
         //if (false) {
         if (move_uploaded_file($file["tmp_name"], $uploadFilePath)) {
-            $pathUrl = substr($_SERVER['REQUEST_URI'], 0, strripos($_SERVER['REQUEST_URI'], "code/postulation.php"));
+            $pathUrl = substr($_SERVER['REQUEST_URI'], 0, strripos($_SERVER['REQUEST_URI'], "code/"));
             $path = $pathUrl . $folderName . "/" . $fileName;
-
             $return["path"] = $path;
             $return["error"] = false;
         } else {

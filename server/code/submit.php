@@ -1,4 +1,8 @@
 <?php
+
+
+
+
 include_once('./class/FileSystem.php');
 include_once('./class/Validator.php');
 include_once('./class/Response.php');
@@ -97,8 +101,7 @@ if ($validateInputs["result"]) {
             $validateInputs["inputs"]["personal_image"] = $pathImg;
             $validateInputs["inputs"]["personal_cv"] = $pathCv;
 
-            FileSystem::createJsonFile("postulantes", $fileNameJson, json_encode($validateInputs["inputs"]));
-            //!BORRAR
+            FileSystem::createJsonFile("postulantes", $fileNameJson, $validateInputs["inputs"]);
             Response::response(["result" => true], 201);
         } else {
             //Si los archivos no se subieron correctamente
@@ -117,7 +120,6 @@ if ($validateInputs["result"]) {
 
 
 //TODO Si el documento ya existen no es necesario que se compruebe si hay imagen
-
 
 
 
