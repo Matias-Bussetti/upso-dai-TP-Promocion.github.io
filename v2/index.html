@@ -34,13 +34,19 @@
                         <option value="cuil">CUIL</option>
                         <option value="cuit">CUIT</option>
                     </select>
+                    <div class="invalid-feedback">
+                    </div>
                 </div>
 
                 <div class="col-12 col-md-4 mb-3">
                     <label for="document_number">Número de Documento</label>
                     <input id="document_number" name="document_number" type="number" placeholder="Número de Documento"
                         class="form-control">
+                    <div class="invalid-feedback">
+                    </div>
                 </div>
+
+
 
                 <div class="col-12 col-md-4 mb-3">
                     <br>
@@ -57,18 +63,24 @@
                 <div class="col-12 col-md-6 mb-3">
                     <label for="name">Nombre</label>
                     <input id="name" name="name" type="text" placeholder="Nombre" class="form-control" disabled>
+                    <div class="invalid-feedback">
+                    </div>
                 </div>
 
                 <div class="col-12 col-md-6 mb-3">
                     <label for="last_name">Apellido</label>
                     <input id="last_name" name="last_name" type="text" placeholder="Apellido" class="form-control "
                         disabled>
+                    <div class="invalid-feedback">
+                    </div>
                 </div>
 
                 <div class="col-12 mb-3">
                     <label for="email">Email</label>
                     <input id="email" name="email" type="email" placeholder="ejemplo@gmail.com" class="form-control "
                         disabled>
+                    <div class="invalid-feedback">
+                    </div>
                 </div>
 
                 <div class="col-12 mb-3">
@@ -81,9 +93,12 @@
                         <option value="devops">devops 4</option>
                         <option value="diseñador">diseñador 5</option>
                     </select>
+                    <div class="invalid-feedback">
+                    </div>
                 </div>
                 <div class="col-12 col-md-4 mb-3">
-                    <button class="btn btn-primary w-100 " type="button" id="validate-step-1">Siguiente Paso</button>
+                    <button class="btn btn-primary w-100 " type="button" id="validate-step-1" disabled>Siguiente
+                        Paso</button>
                 </div>
             </div>
 
@@ -93,7 +108,8 @@
                     <label for="personal-image" class="form-label">Subir Foto de Perfil</label>
                     <input id="personal-image" name="personal_image" type="file" class="form-control"
                         accept="image/jpeg, image/png" disabled>
-                    <br>
+                    <div class="invalid-feedback">
+                    </div><br>
                     <img id="personal-image-container" src="https://via.placeholder.com/300?text=Imágen"
                         class="col-10 col-md-8 rounded mx-auto d-block" alt="...">
                 </div>
@@ -109,6 +125,8 @@
                         <label for="personal-cv" class="form-label">Subir Curriculum Vitae</label>
                         <input id="personal-cv" name="personal_cv" type="file" class="form-control"
                             accept="application/pdf" disabled>
+                        <div class="invalid-feedback">
+                        </div>
                     </div>
                     <div class="d-flex">
                         <iframe id="personal-cv-container" class="col-10 col-md-8 iframe rounded"
@@ -119,7 +137,7 @@
             </div>
 
             <div class="col-12 mb-3">
-                <button class="btn btn-primary w-100 " type="submit">Postularme</button>
+                <button class="btn btn-primary w-100 " type="submit" disabled>Postularme</button>
             </div>
 
 
