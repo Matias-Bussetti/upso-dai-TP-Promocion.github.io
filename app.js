@@ -46,6 +46,27 @@ window.onload = () => {
     }
   };
 
+  console.log(window.location.pathname);
+
+  firstStepInputs = [form[0], form[1], form[2], form[3], form[4], form[5]];
+  firstStepButton = form[6];
+
+  secondStepInputs = [form[7]];
+  secondStepButton = form[8];
+
+  thirdStepInputs = [form[9]];
+  thirdStepButton = form[10];
+
+  firstStepButton.onclick = () => firstStep();
+  secondStepButton.onclick = () => secondStep();
+  thirdStepButton.onclick = () => ThirdStep();
+
+  function firstStep() {}
+
+  function secondStep() {}
+  function ThirdStep() {}
+
+  /*
   documentInputs = [form[0], form[1]];
 
   buttonValidateDocument = form[2];
@@ -62,7 +83,6 @@ window.onload = () => {
   cvInput = form[10];
 
   buttonSubmit = form[11];
-
   function validateDocument() {
     var init = {
       method: "POST",
@@ -118,6 +138,7 @@ window.onload = () => {
     //TODO: Habilitar Botón Submit
     enableElement(buttonSubmit);
   }
+
 };
 
 function showErrors(errors, ...inputs) {
@@ -132,6 +153,20 @@ function showErrors(errors, ...inputs) {
       input.nextElementSibling.innerText = "";
     }
   });
+  */
+};
+
+function postRequest(phpFileName) {
+  var init = {
+    method: "POST",
+  };
+
+  var perfil = new FormData(form);
+  init.body = perfil;
+
+  var url = ``;
+  var url = "./server/code/validateDocument.php";
+  var req = new Request(url, init);
 }
 
 function inputValid(input) {
@@ -147,73 +182,3 @@ function inputInvalid(input) {
 function enableElement(element) {
   element.removeAttribute("disabled");
 }
-/*
-validate-document
-validate-step-1
-validate-step-2
-
-*/
-
-/*
-  personalDataInputs = document.querySelectorAll(
-    "div#personal-data input, div#personal-data select"
-  );
-
-  personalImage = document.getElementById("personal-image");
-  personalImageContainer = document.getElementById("personal-image-container");
-
-  personalCV = document.getElementById("personal-cv");
-  personalCVContainer = document.getElementById("personal-cv-container");
-
-  validateButton = document.getElementById("validate-document");
-validateButton.onclick = (e) => {
-    // es una variable porque se modifica en la llamada
-    var init = {
-      method: "POST",
-    };
-
-    var perfil = new FormData(form);
-    init.body = perfil;
-
-    var url = "./server/code/validateDocument.php";
-    var req = new Request(url, init);
-
-    fetch(req).then(recuperar).then(mostrar).catch(error);
-
-    function recuperar(rta) {
-      return rta.json();
-    }
-
-    function mostrar(dato) {
-      if (dato.exist) {
-        personalDataInputs.forEach((input) => {
-          input.removeAttribute("disabled");
-          input.onchange = () => a();
-        });
-        personalImage.removeAttribute("disabled");
-        personalCV.removeAttribute("disabled");
-
-        console.log(dato.data);
-
-        form.name.value = dato.data.name;
-        form.last_name.value = dato.data.last_name;
-        form.email.value = dato.data.email;
-        form.job.value = dato.data.job;
-
-        personalImageContainer.src = dato.data.personal_image;
-        personalCVContainer.src = dato.data.personal_cv;
-        //SET img
-      } else {
-        personalDataInputs.forEach((input) => {
-          input.removeAttribute("disabled");
-          input.onchange = () => a();
-        });
-      }
-      //console.table(dato);
-    }
-
-    function error(e) {
-      console.error(e);
-    }
-  };
-  */

@@ -99,9 +99,7 @@ if ($validateInputs["result"]) {
 
             FileSystem::createJsonFile("postulantes", $fileNameJson, json_encode($validateInputs["inputs"]));
             //!BORRAR
-            $aaa = FileSystem::returnJsonFromFile("postulantes", $fileNameJson); //Postulacion Previa
-            //!BORRAR
-            Response::response(["result" => true, "data" => $validateInputs, "post" => $_POST], 201);
+            Response::response(["result" => true], 201);
         } else {
             //Si los archivos no se subieron correctamente
             Response::response($validateUpload);
