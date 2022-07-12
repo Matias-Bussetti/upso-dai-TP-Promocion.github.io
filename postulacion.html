@@ -18,123 +18,152 @@
 </head>
 
 <body>
-    <form id="form" action="" class="mt-5 needs-validation">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid ">
+
+            <a class="navbar-brand" href="#">
+                <img src="./img/logo.jpg" class="rounded-circle logo d-inline-block align-text-top">
+                Consultora "Bahia Blanca"
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./index.html">Ver Puestos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Formulario de Postulación</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main>
+
         <div class="container">
+            <h1 class="my-4">Formulario de Postulación</h1>
+            <form id="form" action="" class="needs-validation">
 
-            <!-- DOCUMENTO y NOMBRE APELLIDO Y CORREO -->
-            <div class="row mb-3 pt-3">
+                <!-- DOCUMENTO y NOMBRE APELLIDO Y CORREO -->
+                <div class="row mb-3 pt-3">
 
-                <div class="col-12 col-md-6 mb-3">
-                    <label for="document_type">Tipo de Documento</label>
-                    <select id="document_type" name="document_type" class="form-select">
-                        <option selected disabled value="null">Elije tu tipo de Documento</option>
-                        <option value="dni">DNI</option>
-                        <option value="lc">LC</option>
-                        <option value="le">LE</option>
-                        <option value="cuil">CUIL</option>
-                        <option value="cuit">CUIT</option>
-                    </select>
-                    <div class="invalid-feedback">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 mb-3">
-                    <label for="document_number">Número de Documento</label>
-                    <input id="document_number" name="document_number" type="number" placeholder="Número de Documento"
-                        class="form-control">
-                    <div class="invalid-feedback">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 mb-3">
-                    <label for="name">Nombre</label>
-                    <input id="name" name="name" type="text" placeholder="Nombre" class="form-control">
-                    <div class="invalid-feedback">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 mb-3">
-                    <label for="last_name">Apellido</label>
-                    <input id="last_name" name="last_name" type="text" placeholder="Apellido" class="form-control ">
-                    <div class="invalid-feedback">
-                    </div>
-                </div>
-
-                <div class="col-12 mb-3">
-                    <label for="email">Email</label>
-                    <input id="email" name="email" type="email" placeholder="ejemplo@gmail.com" class="form-control ">
-                    <div class="invalid-feedback">
-                    </div>
-                </div>
-
-                <div class="col-12 mb-3">
-                    <label for="job">Puesto de Trabajo</label>
-                    <select id="job" name="job" class="form-select">
-                        <option selected disabled value="null">Elije tu puesto de trabajo Deseado</option>
-                        <option value="frontend">frontend 1</option>
-                        <option value="backend">backend 2</option>
-                        <option value="marketing">marketing 3</option>
-                        <option value="devops">devops 4</option>
-                        <option value="diseñador">diseñador 5</option>
-                    </select>
-                    <div class="invalid-feedback">
-                    </div>
-                </div>
-                <div class="col-12 mb-3">
-                    <button class="btn btn-primary w-100 " type="button" id="validate-step-1">Siguiente
-                        Paso</button>
-                </div>
-            </div>
-
-            <!-- SUBIR IMAGEN -->
-            <div class="row mb-3 pt-3">
-                <div class="mb-3">
-                    <label for="personal-image" class="form-label">Subir Foto de Perfil</label>
-                    <input id="personal-image" name="personal_image" size="500" type="file" class="form-control"
-                        accept="image/jpeg, image/png" disabled>
-                    <div class="invalid-feedback">
-                    </div>
-                    <div id="file-drop-zone-image" class="bg-light container p-4 my-3 border rounded text-center">
-                        Soltar Imágen
-                    </div>
-                    <img id="personal-image-container" src="https://via.placeholder.com/300?text=Vista%20Previa"
-                        class="col-10 col-md-8 rounded mx-auto bg-secondary d-block" alt="...">
-                </div>
-                <div class="col-12 col-md-4 mb-3">
-                    <button class="btn btn-primary w-100 " type="button" id="validate-step-2" disabled>Siguiente
-                        Paso</button>
-                </div>
-            </div>
-
-            <!-- SUBIR CV -->
-            <div class="row mb-3 pt-3">
-                <div class="mb-3">
-                    <div class="mb-3">
-                        <label for="personal-cv" class="form-label">Subir Curriculum Vitae</label>
-                        <input id="personal-cv" name="personal_cv" type="file" class="form-control"
-                            accept="application/pdf" disabled>
+                    <div class="col-12 col-md-6 mb-3">
+                        <label for="document_type">Tipo de Documento</label>
+                        <select id="document_type" name="document_type" class="form-select">
+                            <option selected disabled value="null">Elije tu tipo de Documento</option>
+                            <option value="dni">DNI</option>
+                            <option value="lc">LC</option>
+                            <option value="le">LE</option>
+                            <option value="cuil">CUIL</option>
+                            <option value="cuit">CUIT</option>
+                        </select>
                         <div class="invalid-feedback">
                         </div>
-                        <div id="file-drop-zone-cv" class="bg-light container p-4 my-3 border rounded text-center">
-                            Soltar Curriculum
+                    </div>
+
+                    <div class="col-12 col-md-6 mb-3">
+                        <label for="document_number">Número de Documento</label>
+                        <input id="document_number" name="document_number" type="number"
+                            placeholder="Número de Documento" class="form-control">
+                        <div class="invalid-feedback">
                         </div>
                     </div>
-                    <div class="d-flex">
 
-                        <iframe id="personal-cv-container" class="col-10 col-md-8 iframe bg-secondary rounded" src=''
-                            height="678"></iframe>
+                    <div class="col-12 col-md-6 mb-3">
+                        <label for="name">Nombre</label>
+                        <input id="name" name="name" type="text" placeholder="Nombre" class="form-control">
+                        <div class="invalid-feedback">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 mb-3">
+                        <label for="last_name">Apellido</label>
+                        <input id="last_name" name="last_name" type="text" placeholder="Apellido" class="form-control ">
+                        <div class="invalid-feedback">
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="email" placeholder="ejemplo@gmail.com"
+                            class="form-control ">
+                        <div class="invalid-feedback">
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label for="job">Puesto de Trabajo</label>
+                        <select id="job" name="job" class="form-select">
+                            <option selected disabled value="null">Elije tu puesto de trabajo Deseado</option>
+                            <option value="frontend">frontend 1</option>
+                            <option value="backend">backend 2</option>
+                            <option value="marketing">marketing 3</option>
+                            <option value="devops">devops 4</option>
+                            <option value="diseñador">diseñador 5</option>
+                        </select>
+                        <div class="invalid-feedback">
+                        </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <button class="btn btn-primary w-100 " type="button" id="validate-step-1">Siguiente
+                            Paso</button>
                     </div>
                 </div>
 
-            </div>
+                <!-- SUBIR IMAGEN -->
+                <div class="row mb-3 pt-3">
+                    <div class="mb-3">
+                        <label for="personal-image" class="form-label">Subir Foto de Perfil</label>
+                        <input id="personal-image" name="personal_image" size="500" type="file" class="form-control"
+                            accept="image/jpeg, image/png" disabled>
+                        <div class="invalid-feedback">
+                        </div>
+                        <div id="file-drop-zone-image" class="bg-light container p-4 my-3 border rounded text-center">
+                            Soltar Imágen
+                        </div>
+                        <img id="personal-image-container" src="https://via.placeholder.com/300?text=Vista%20Previa"
+                            class="col-10 col-md-8 rounded mx-auto bg-secondary d-block" alt="...">
+                    </div>
+                    <div class="col-12 col-md-4 mb-3">
+                        <button class="btn btn-primary w-100 " type="button" id="validate-step-2" disabled>Siguiente
+                            Paso</button>
+                    </div>
+                </div>
 
-            <div class="col-12 mb-3">
-                <button class="btn btn-primary w-100 " type="submit" disabled>Postularme</button>
-            </div>
+                <!-- SUBIR CV -->
+                <div class="row mb-3 pt-3">
+                    <div class="mb-3">
+                        <div class="mb-3">
+                            <label for="personal-cv" class="form-label">Subir Curriculum Vitae</label>
+                            <input id="personal-cv" name="personal_cv" type="file" class="form-control"
+                                accept="application/pdf" disabled>
+                            <div class="invalid-feedback">
+                            </div>
+                            <div id="file-drop-zone-cv" class="bg-light container p-4 my-3 border rounded text-center">
+                                Soltar Curriculum
+                            </div>
+                        </div>
+                        <div class="d-flex">
+
+                            <iframe id="personal-cv-container" class="col-10 col-md-8 iframe bg-secondary rounded"
+                                src='' height="678"></iframe>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-12 mb-3">
+                    <button class="btn btn-primary w-100 " type="submit" disabled>Postularme</button>
+                </div>
 
 
+            </form>
         </div>
-    </form>
+    </main>
 
 
     <script src="./js/app.js"></script>
