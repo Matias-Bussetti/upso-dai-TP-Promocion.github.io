@@ -1,6 +1,6 @@
 //TODO: Comentar con typo
 //TODO: "use strict"
-//TODO: Archivo independiente de funciones, comentar
+//DONE: Archivo independiente de funciones, comentar
 //TODO: COMENTAR BACKEND
 //TODO: refactorizar
 //"use strict";
@@ -121,29 +121,18 @@ window.onload = () => {
   //+ FIN DRAG AND DROP
 
   firstStepButton.onclick = () => firstStep();
-  //secondStepButton.onclick = () => secondStep();
-  //thirdStepButton.onclick = () => ThirdStep();
 
   function submit(e) {
     e.preventDefault();
-
-    fetch(postRequest("submit.php"))
-      .then((rta) => rta.json())
-      .then(handleResponse)
-      .catch(handleError);
-
-    function handleResponse(rta) {
-      if (rta.result) {
-        allInputs.forEach((input) => {
-          inputValid(input);
-        });
-      } else {
-        //Mostart Errores
-        showErrors(rta.errors, ...allInputs);
-      }
-    }
+    fetchPostRequest("submit.php", allInputs, postulationDone);
   }
-
+  function secondStep() {
+    fetchPostRequest("secondStep.php", secondStepInputs, secondStepHandler);
+  }
+  function thirdStep(event) {
+    event.preventDefault();
+    fetchPostRequest("thirdStep.php", thirdStepInputs, thirdStepHandler);
+  }
   function firstStep() {
     fetchPostRequest("firstStep.php", firstStepInputs, firstStepHandler);
   }
@@ -151,69 +140,58 @@ window.onload = () => {
   function firstStepHandler(rta) {
     if (rta.exist) {
       //+ EL USUARIO YA FUE CARGADO
-      //TODO: CAMBIAR LOS DATOS DE LA PRIMERA SECCION DEL FORMULARIO
+      //DONE: CAMBIAR LOS DATOS DE LA PRIMERA SECCION DEL FORMULARIO
       form[0].value = rta.data.document_type;
       form[1].value = rta.data.document_number;
       form[2].value = rta.data.name;
       form[3].value = rta.data.last_name;
       form[4].value = rta.data.email;
       form[5].value = rta.data.job;
-      //TODO: SI EL DATO TIENE PERSONAL_IMAGE ENTONCES => SRC CONTENEDOR DE IMAGEN IGUAL A PERSONAL_IMAGE
+      //DONE: SI EL DATO TIENE PERSONAL_IMAGE ENTONCES => SRC CONTENEDOR DE IMAGEN IGUAL A PERSONAL_IMAGE
       if (rta.data.personal_image) {
         containerImage.src = rta.data.personal_image;
       }
-      //TODO: SI EL DATO TIENE PERSONAL_CV ENTONCES => SRC CONTENEDOR DEL CV IGUAL A PERSONAL_CV
+      //DONE: SI EL DATO TIENE PERSONAL_CV ENTONCES => SRC CONTENEDOR DEL CV IGUAL A PERSONAL_CV
       if (rta.data.personal_cv) {
         containerCv.src = rta.data.personal_cv;
       }
 
-      //TODO: HABILITAR INPUTS PASO 2 y 3
+      //DONE: HABILITAR INPUTS PASO 2 y 3
       [...secondStepInputs, ...thirdStepInputs].forEach((input) => {
         elementDisableAttributeValue(input, false);
       });
 
-      //TODO: DESHABILITAR BOTONES SIGUIENTE PASO
+      //DONE: DESHABILITAR BOTONES SIGUIENTE PASO
       elementDisableAttributeValue(firstStepButton, true);
       elementDisableAttributeValue(secondStepButton, true);
 
-      //TODO: HABILITAR BOTON SUBMIT
+      //DONE: HABILITAR BOTON SUBMIT
       elementDisableAttributeValue(thirdStepButton, false);
 
-      //TODO: FORM.ONSUBMIT = SUBMIT()
+      //DONE: FORM.ONSUBMIT = SUBMIT()
       form.onsubmit = (e) => submit(e);
-
-      console.log(form.onsubmit);
     } else {
       // * No Existe el usuario
-      //TODO: Habilitar los input para subir la imagen
+      //DONE: Habilitar los input para subir la imagen
       elementDisableAttributeValue(secondStepInputs[0], false); //Como se que hay solo uno
-      console.log(secondStepInputs[0]);
-      //TODO: Habilitar el botón para el siguiente paso
+      //DONE: Habilitar el botón para el siguiente paso
       elementDisableAttributeValue(firstStepButton, false);
       elementDisableAttributeValue(secondStepButton, false);
-      //TODO: asignar funcion paso 2 al boton paso 2
+      //DONE: asignar funcion paso 2 al boton paso 2
       secondStepButton.onclick = () => secondStep();
     }
   }
 
-  function secondStep() {
-    fetchPostRequest("secondStep.php", secondStepInputs, secondStepHandler);
-  }
-
   function secondStepHandler(rta) {
-    //TODO: Habilitar input Cv
+    //DONE: Habilitar input Cv
     elementDisableAttributeValue(thirdStepInputs[0], false); //Como se que hay solo uno
-    //TODO: Habilitar Boton Submit
+    //DONE: Habilitar Boton Submit
     elementDisableAttributeValue(thirdStepButton, false);
 
-    //TODO: form on submit = funcion thirdStep()
+    //DONE: form on submit = funcion thirdStep()
     form.onsubmit = (e) => thirdStep(e);
   }
 
-  function thirdStep(event) {
-    event.preventDefault();
-    fetchPostRequest("thirdStep.php", thirdStepInputs, thirdStepHandler);
-  }
   function thirdStepHandler(rta) {
     //? SALIO TODO BIEN
     postulationDone();
@@ -223,7 +201,7 @@ window.onload = () => {
     // allInputs.forEach((input) => {
     //   inputValid(input);
     // });
-    console.log("Salio TODO bien");
+    console.log("asdasd %c Salio TODO bien", "color:red;");
   }
 };
 
