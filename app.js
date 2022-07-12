@@ -1,3 +1,7 @@
+//TODO: Comentar con typo
+//TODO: "use strict"
+//TODO: Archivo independiente de funciones, comentar
+//TODO: COMENTAR BACKEND
 //"use strict";
 const FILE_DROP_ZONE_FOR_IMAGE = "file-drop-zone-image";
 const FILE_DROP_ZONE_FOR_CV = "file-drop-zone-cv";
@@ -26,6 +30,8 @@ window.onload = () => {
   allInputs = [...firstStepInputs, ...secondStepInputs, ...thirdStepInputs];
 
   //+ INICIO DRAG AND DROP
+  //TODO: Refactorizar codigo
+  //TODO: El mensaje de error mostrarlo en el invalid feedback
   //Prevenir que la página haga algo cuando la se lanza un archivo por equivocación
   document.ondrop = (event) => event.preventDefault();
   document.ondragover = (event) => event.preventDefault();
@@ -68,10 +74,9 @@ window.onload = () => {
         onDragLeave(event);
 
         file = event.dataTransfer.files[0];
-        console.log(event.dataTransfer.files);
+        input.files = event.dataTransfer.files;
       } else {
         //Si fue en el input
-        console.log(event.target.files);
         file = event.target.files[0];
       }
       showImage(file);
