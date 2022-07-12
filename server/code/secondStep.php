@@ -8,7 +8,7 @@ $request = $_POST;
 $typesArray = [
     'document_type' => "select|require",
     'document_number' => "text|require",
-    'personal_image' => "file|require",
+    'personal_image' => "file|require|maxsize:512000",
 ];
 
 $validateInputs = Validator::validate($request, $typesArray);

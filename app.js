@@ -39,7 +39,7 @@ window.onload = () => {
         });
       } else {
         //Mostart Errores
-        showErrors(rta.errors, allInputs);
+        showErrors(rta.errors, ...allInputs);
       }
     }
   }

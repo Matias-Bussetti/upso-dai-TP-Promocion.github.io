@@ -4,6 +4,7 @@ class Validator
     private static $_errorMsg =
     [
         "file_upload_error" => "El archivo no se subio correctamente, pruebe denuevo",
+        "file_maxsize_error" => "El archivo no es permintido, supera los ",
         "select_error" => "Elija una Opción",
         "input_empty_error" => "Campo Vacio",
     ];
@@ -18,8 +19,32 @@ class Validator
 
                 $file = $_FILES[$input];
 
-                //Si no esta en la carpeta temp
-                if (!is_uploaded_file($file["tmp_name"])) {
+
+
+
+
+                //Si esta en la carpeta temp
+                if (is_uploaded_file($file["tmp_name"])) {
+
+                    $validation["inputs"][$input] = "uploaded";
+
+                    if (str_contains($type, "maxsize")) {
+                        $bitsCap = intval(substr($type, strpos($type, "maxsize:") + strlen("maxsize:")));
+
+                        if (filesize($file["tmp_name"]) > $bitsCap) {
+                            $validation["result"] = false;
+
+                            // Codigo utilizado de https://subinsb.com/convert-bytes-kb-mb-gb-php/
+                            $base = log($bitsCap) / log(1024);
+                            $suffix = array("", "KB", "MB", "GB", "TB");
+                            $f_base = floor($base);
+
+
+                            $validation["errors"][$input] = self::$_errorMsg["file_maxsize_error"] . round(pow(1024, $base - floor($base)), 1) . $suffix[$f_base];
+                        }
+                    }
+                } else {
+                    //Si no esta en la carpeta temp
                     //Si es requerido
                     if (str_contains($type, "require")) {
                         //Retornar error "file_upload_error"
@@ -29,9 +54,6 @@ class Validator
                         //Retornar null
                         $validation["inputs"][$input] = null;
                     }
-                } else {
-                    //Si esta en la carpeta temp, retornar uploaded
-                    $validation["inputs"][$input] = "uploaded";
                 }
             } else {
                 //Si no es de tipo archivo
