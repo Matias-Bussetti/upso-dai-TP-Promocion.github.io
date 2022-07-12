@@ -1,4 +1,9 @@
 //"use strict";
+const FILE_DROP_ZONE_FOR_IMAGE = "file-drop-zone-image";
+const FILE_DROP_ZONE_FOR_CV = "file-drop-zone-cv";
+const ALLOWED_TYPES_IMAGE = ["image/jpeg", "image/png"];
+const ALLOWED_TYPE_PDF = ["application/pdf"];
+
 window.onload = () => {
   form = document.getElementById("form");
 
@@ -19,6 +24,94 @@ window.onload = () => {
   containerCv = document.getElementById("personal-cv-container");
 
   allInputs = [...firstStepInputs, ...secondStepInputs, ...thirdStepInputs];
+
+  //+ INICIO DRAG AND DROP
+  //Prevenir que la página haga algo cuando la se lanza un archivo por equivocación
+  document.ondrop = (event) => event.preventDefault();
+  document.ondragover = (event) => event.preventDefault();
+
+  var dropZoneDivForImage = document.getElementById(FILE_DROP_ZONE_FOR_IMAGE);
+  var dropZoneDivForCv = document.getElementById(FILE_DROP_ZONE_FOR_CV);
+
+  enableDrop(
+    secondStepInputs[0],
+    dropZoneDivForImage,
+    containerImage,
+    ALLOWED_TYPES_IMAGE
+  );
+  enableDrop(
+    thirdStepInputs[0],
+    dropZoneDivForCv,
+    containerCv,
+    ALLOWED_TYPE_PDF
+  );
+
+  function enableDrop(input, dropZone, container, allawedType) {
+    //Animación sobre el contendor
+    dropZone.ondragenter = (e) => onDragEnter(e);
+    dropZone.ondragleave = (e) => onDragLeave(e);
+
+    dropZone.ondragover = (event) => onDragOver(event);
+
+    dropZone.ondrop = (event) => eventWhenFilesSelectedOrDropped(event);
+    input.onchange = (event) => eventWhenFilesSelectedOrDropped(event);
+
+    function eventWhenFilesSelectedOrDropped(event) {
+      let fileList;
+
+      //Aqui verificamos si el evento fue llamado el input o en el contenedor
+      if (event.dataTransfer) {
+        //Si fue en el contenedor
+        event.stopPropagation();
+        event.preventDefault();
+
+        onDragLeave(event);
+
+        file = event.dataTransfer.files[0];
+        console.log(event.dataTransfer.files);
+      } else {
+        //Si fue en el input
+        console.log(event.target.files);
+        file = event.target.files[0];
+      }
+      showImage(file);
+    }
+
+    function showImage(file) {
+      //Si el tipo del archivo esta permitido
+      if (allawedType.includes(file.type)) {
+        const reader = new FileReader();
+        //Read if imagen
+        reader.addEventListener("load", (event) => {
+          container.src = event.target.result;
+        });
+        reader.readAsDataURL(file);
+      } else {
+        //En el caso de no estar permitido se mostrara este mensaje
+        alert(
+          `Tipo de Archivo no Permitido: \r\n ${file.type} \r\n en: \r\n ${file.name} `
+        );
+      }
+    }
+    // Funciones para los efectos
+
+    function onDragOver(event) {
+      event.stopPropagation();
+      event.preventDefault();
+      // Style the drag-and-drop as a "copy file" operation.
+      event.dataTransfer.dropEffect = "copy";
+    }
+
+    function onDragEnter(evento) {
+      evento.target.classList.add("drag-enter");
+    }
+
+    function onDragLeave(evento) {
+      evento.target.classList.remove("drag-enter");
+    }
+  }
+  // Funciones para los efectos
+  //+ FIN DRAG AND DROP
 
   firstStepButton.onclick = () => firstStep();
   //secondStepButton.onclick = () => secondStep();
