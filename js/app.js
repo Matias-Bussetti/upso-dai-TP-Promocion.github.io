@@ -2,6 +2,7 @@
 //TODO: "use strict"
 //TODO: Archivo independiente de funciones, comentar
 //TODO: COMENTAR BACKEND
+//TODO: refactorizar
 //"use strict";
 const FILE_DROP_ZONE_FOR_IMAGE = "file-drop-zone-image";
 const FILE_DROP_ZONE_FOR_CV = "file-drop-zone-cv";
@@ -32,6 +33,7 @@ window.onload = () => {
   //+ INICIO DRAG AND DROP
   //TODO: Refactorizar codigo
   //TODO: El mensaje de error mostrarlo en el invalid feedback
+  //TODO: Si no se trae ningun archivo mostrar imagen por defecto
   //Prevenir que la página haga algo cuando la se lanza un archivo por equivocación
   document.ondrop = (event) => event.preventDefault();
   document.ondragover = (event) => event.preventDefault();
@@ -143,126 +145,91 @@ window.onload = () => {
   }
 
   function firstStep() {
-    fetch(postRequest("firstStep.php"))
-      .then((rta) => rta.json())
-      .then(handleResponse)
-      .catch(handleError);
+    fetchPostRequest("firstStep.php", firstStepInputs, firstStepHandler);
+  }
 
-    function handleResponse(rta) {
-      if (rta.result) {
-        firstStepInputs.forEach((input) => {
-          inputValid(input);
-        });
-        if (rta.exist) {
-          //+ EL USUARIO YA FUE CARGADO
-          //TODO: CAMBIAR LOS DATOS DE LA PRIMERA SECCION DEL FORMULARIO
-          form[0].value = rta.data.document_type;
-          form[1].value = rta.data.document_number;
-          form[2].value = rta.data.name;
-          form[3].value = rta.data.last_name;
-          form[4].value = rta.data.email;
-          form[5].value = rta.data.job;
-          //TODO: SI EL DATO TIENE PERSONAL_IMAGE ENTONCES => SRC CONTENEDOR DE IMAGEN IGUAL A PERSONAL_IMAGE
-          if (rta.data.personal_image) {
-            containerImage.src = rta.data.personal_image;
-          }
-          //TODO: SI EL DATO TIENE PERSONAL_CV ENTONCES => SRC CONTENEDOR DEL CV IGUAL A PERSONAL_CV
-          if (rta.data.personal_cv) {
-            containerCv.src = rta.data.personal_cv;
-          }
-
-          //TODO: HABILITAR INPUTS PASO 2 y 3
-          [...secondStepInputs, ...thirdStepInputs].forEach((input) => {
-            elementDisableAttributeValue(input, false);
-          });
-
-          //TODO: DESHABILITAR BOTONES SIGUIENTE PASO
-          elementDisableAttributeValue(firstStepButton, true);
-          elementDisableAttributeValue(secondStepButton, true);
-
-          //TODO: HABILITAR BOTON SUBMIT
-          elementDisableAttributeValue(thirdStepButton, false);
-
-          //TODO: FORM.ONSUBMIT = SUBMIT()
-          form.onsubmit = (e) => submit(e);
-
-          console.log(form.onsubmit);
-        } else {
-          // * No Existe el usuario
-          //TODO: Habilitar los input para subir la imagen
-          elementDisableAttributeValue(secondStepInputs[0], false); //Como se que hay solo uno
-          console.log(secondStepInputs[0]);
-          //TODO: Habilitar el botón para el siguiente paso
-          elementDisableAttributeValue(firstStepButton, false);
-          elementDisableAttributeValue(secondStepButton, false);
-          //TODO: asignar funcion paso 2 al boton paso 2
-          secondStepButton.onclick = () => secondStep();
-        }
-      } else {
-        //Mostart Errores
-        showErrors(rta.errors, ...firstStepInputs);
+  function firstStepHandler(rta) {
+    if (rta.exist) {
+      //+ EL USUARIO YA FUE CARGADO
+      //TODO: CAMBIAR LOS DATOS DE LA PRIMERA SECCION DEL FORMULARIO
+      form[0].value = rta.data.document_type;
+      form[1].value = rta.data.document_number;
+      form[2].value = rta.data.name;
+      form[3].value = rta.data.last_name;
+      form[4].value = rta.data.email;
+      form[5].value = rta.data.job;
+      //TODO: SI EL DATO TIENE PERSONAL_IMAGE ENTONCES => SRC CONTENEDOR DE IMAGEN IGUAL A PERSONAL_IMAGE
+      if (rta.data.personal_image) {
+        containerImage.src = rta.data.personal_image;
       }
+      //TODO: SI EL DATO TIENE PERSONAL_CV ENTONCES => SRC CONTENEDOR DEL CV IGUAL A PERSONAL_CV
+      if (rta.data.personal_cv) {
+        containerCv.src = rta.data.personal_cv;
+      }
+
+      //TODO: HABILITAR INPUTS PASO 2 y 3
+      [...secondStepInputs, ...thirdStepInputs].forEach((input) => {
+        elementDisableAttributeValue(input, false);
+      });
+
+      //TODO: DESHABILITAR BOTONES SIGUIENTE PASO
+      elementDisableAttributeValue(firstStepButton, true);
+      elementDisableAttributeValue(secondStepButton, true);
+
+      //TODO: HABILITAR BOTON SUBMIT
+      elementDisableAttributeValue(thirdStepButton, false);
+
+      //TODO: FORM.ONSUBMIT = SUBMIT()
+      form.onsubmit = (e) => submit(e);
+
+      console.log(form.onsubmit);
+    } else {
+      // * No Existe el usuario
+      //TODO: Habilitar los input para subir la imagen
+      elementDisableAttributeValue(secondStepInputs[0], false); //Como se que hay solo uno
+      console.log(secondStepInputs[0]);
+      //TODO: Habilitar el botón para el siguiente paso
+      elementDisableAttributeValue(firstStepButton, false);
+      elementDisableAttributeValue(secondStepButton, false);
+      //TODO: asignar funcion paso 2 al boton paso 2
+      secondStepButton.onclick = () => secondStep();
     }
   }
 
   function secondStep() {
-    fetch(postRequest("secondStep.php"))
-      .then((rta) => rta.json())
-      .then(handleResponse)
-      .catch(handleError);
-
-    function handleResponse(rta) {
-      if (rta.result) {
-        secondStepInputs.forEach((input) => {
-          inputValid(input);
-        });
-        //TODO: Habilitar input Cv
-        elementDisableAttributeValue(thirdStepInputs[0], false); //Como se que hay solo uno
-        //TODO: Habilitar Boton Submit
-        elementDisableAttributeValue(thirdStepButton, false);
-
-        //TODO: form on submit = funcion thirdStep()
-        form.onsubmit = (e) => thirdStep(e);
-      } else {
-        //Mostart Errores
-        showErrors(rta.errors, ...secondStepInputs);
-      }
-    }
+    fetchPostRequest("secondStep.php", secondStepInputs, secondStepHandler);
   }
+
+  function secondStepHandler(rta) {
+    //TODO: Habilitar input Cv
+    elementDisableAttributeValue(thirdStepInputs[0], false); //Como se que hay solo uno
+    //TODO: Habilitar Boton Submit
+    elementDisableAttributeValue(thirdStepButton, false);
+
+    //TODO: form on submit = funcion thirdStep()
+    form.onsubmit = (e) => thirdStep(e);
+  }
+
   function thirdStep(event) {
     event.preventDefault();
-    fetch(postRequest("thirdStep.php"))
-      .then((rta) => rta.json())
-      .then(handleResponse)
-      .catch(handleError);
-
-    function handleResponse(rta) {
-      console.log(rta);
-      if (rta.result) {
-        secondStepInputs.forEach((input) => {
-          inputValid(input);
-        });
-        //? SALIO TODO BIEN
-        postulationDone();
-      } else {
-        //Mostart Errores
-        showErrors(rta.errors, ...thirdStepInputs);
-      }
-    }
+    fetchPostRequest("thirdStep.php", thirdStepInputs, thirdStepHandler);
+  }
+  function thirdStepHandler(rta) {
+    //? SALIO TODO BIEN
+    postulationDone();
   }
 
   function postulationDone() {
-    allInputs.forEach((input) => {
-      inputValid(input);
-    });
+    // allInputs.forEach((input) => {
+    //   inputValid(input);
+    // });
     console.log("Salio TODO bien");
   }
 };
 
-function handleError(err) {
-  console.error(err);
-}
+//+ FUNCIONALIDADES
 
+//+ INICIO INPUTS
 function showErrors(errors, ...inputs) {
   inputs.forEach((input) => {
     if (errors.hasOwnProperty(input.name)) {
@@ -277,19 +244,6 @@ function showErrors(errors, ...inputs) {
   });
 }
 
-function postRequest(phpFileName) {
-  var init = {
-    method: "POST",
-  };
-
-  var perfil = new FormData(form);
-  init.body = perfil;
-
-  var url = "./server/code/" + phpFileName;
-
-  return new Request(url, init);
-}
-
 function inputValid(input) {
   input.classList.add("is-valid");
   input.classList.remove("is-invalid");
@@ -299,6 +253,7 @@ function inputInvalid(input) {
   input.classList.add("is-invalid");
   input.classList.remove("is-valid");
 }
+//+ FIN INPUTS
 
 /**
  * Agrega o elimina al elemento pasado como parámetro el atributo "disabled", dependiendo del valor del segundo parámetro

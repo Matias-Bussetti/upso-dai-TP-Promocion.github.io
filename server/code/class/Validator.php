@@ -19,10 +19,6 @@ class Validator
 
                 $file = $_FILES[$input];
 
-
-
-
-
                 //Si esta en la carpeta temp
                 if (is_uploaded_file($file["tmp_name"])) {
 
@@ -38,7 +34,6 @@ class Validator
                             $base = log($bitsCap) / log(1024);
                             $suffix = array("", "KB", "MB", "GB", "TB");
                             $f_base = floor($base);
-
 
                             $validation["errors"][$input] = self::$_errorMsg["file_maxsize_error"] . round(pow(1024, $base - floor($base)), 1) . $suffix[$f_base];
                         }
