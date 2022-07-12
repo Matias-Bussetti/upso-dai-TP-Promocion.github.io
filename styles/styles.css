@@ -1,0 +1,78 @@
+iframe {
+  margin: auto !important;
+  width: 100%;
+  background-color: #ccc;
+}
+
+div.drag-enter {
+  outline: 0px solid;
+  animation: dragEnter 0.5s infinite ease;
+}
+
+.logo {
+  width: 100px;
+  text-decoration: none;
+  transition: 0.5s ease all;
+}
+.overlay-bg {
+  width: 100%;
+  min-height: 400px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.overlay-bg.frontend {
+  background-image: url("../img/jobs/frontend.jpg");
+}
+.overlay-bg.backend {
+  background-image: url("../img/jobs/backend.png");
+}
+.overlay-bg.devops {
+  background-image: url("../img/jobs/devops.jpg");
+}
+.overlay-bg.marketing {
+  background-image: url("../img/jobs/marketing.png");
+}
+.overlay-bg.diseñador {
+  background-image: url("../img/jobs/diseñador.jpeg");
+}
+.card-img-overlay {
+  position: relative !important;
+}
+.overlay {
+  background-color: #000a;
+  min-height: 400px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+@keyframes dragEnter {
+  0% {
+    outline: 0px solid #f00;
+    font-size: 2rem;
+    color: #000;
+  }
+  50% {
+    outline: 5px solid #f00;
+    font-size: 2rem;
+    color: #f00;
+  }
+  100% {
+    outline: 0px solid #f00;
+    color: #000;
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 667px) {
+  .logo {
+    width: 50px;
+  }
+}
+@media (max-width: 375px) {
+  .logo {
+    width: 30px;
+  }
+}

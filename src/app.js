@@ -3,6 +3,10 @@
 //DONE: Archivo independiente de funciones, comentar
 //TODO: COMENTAR BACKEND
 //TODO: refactorizar
+
+//TODO: HABILITAR DRAG AND DROP CUANDO SE HACE EL PASO UNO
+
+//TODO: SI EL ARCHIVO QUE SE SUBE TIENE NADA MOSTRAR UN MENSAJE DE ERROR EN INVALID FEEDBACK
 //"use strict";
 const FILE_DROP_ZONE_FOR_IMAGE = "file-drop-zone-image";
 const FILE_DROP_ZONE_FOR_CV = "file-drop-zone-cv";
