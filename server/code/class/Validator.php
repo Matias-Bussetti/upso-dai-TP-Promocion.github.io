@@ -1,6 +1,14 @@
 <?php
+
+/**
+ * Esta clase sirve para validar los campos en un arreglo
+ */
 class Validator
 {
+
+    /**
+     * Arreglo de errores con sus mensajes de error
+     */
     private static $_errorMsg =
     [
         "file_upload_error" => "El archivo no se subio correctamente, pruebe denuevo",
@@ -9,10 +17,15 @@ class Validator
         "input_empty_error" => "Campo Vacio",
     ];
 
+    /**
+     * Valida los campos del arreglo con los tipos traidos por parametro
+     */
     public static function validate($validateArray, $typesArray)
     {
+        //Resultado bien
         $validation["result"] = true;
 
+        //Por cada tipo
         foreach ($typesArray as $input => $type) {
             //Si el tipo es archivo
             if (str_contains($type, "file")) {

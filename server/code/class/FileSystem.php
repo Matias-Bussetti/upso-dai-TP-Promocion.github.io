@@ -1,7 +1,13 @@
 <?php
+
+/**
+ * Clase que tendra la responsabilidad de administrar y gestionar archivos
+ */
 class FileSystem
 {
-
+    /**
+     * Variable en la que se guardan las ubicaciones de las carpetas desde este archivo
+     */
     private static $_folders =
     [
         "curriculums" => "./../../server/curriculums",
@@ -9,33 +15,36 @@ class FileSystem
         "postulantes" => "./../../server/postulantes",
     ];
 
+    /**
+     * Variable en la que se guardan los mensajes de error
+     */
     private static $_errorMsg =
     [
         "move_upload_fail" => "El archivo no se guardo, error al mover el archivo del temp a la carpeta. Compruebe la configuración del servidor",
     ];
 
 
-
+    /**
+     * Esta función sirve para retornar el contenido dentro de un archivo json
+     */
     public static function returnJsonFromFile($folderName, $fileName)
     {
         return json_decode(file_get_contents(self::$_folders[$folderName] . "/" . $fileName), TRUE);
     }
 
-
+    /**
+     * Esta funcion sirve para retornar si un archivo existe en una carpeta
+     */
     public static function checkInFolderIfExistWithName($folderName, $fileName)
     {
-
-        $return = [];
-
         $myfiles = array_diff(scandir(self::$_folders[$folderName]), array('.', '..'));
-        //test
-        // print_r($fileName);
-        // print_r($myfiles);
-        // print_r(in_array($fileName,$myfiles) ? "SI" : "NO");
 
         return in_array($fileName, $myfiles);
     }
 
+    /**
+     * Esta funcion sirve para crear un archivo json
+     */
     public static function createJsonFile($folderName, $fileName, $jsonData)
     {
         // creo el archivo con los datos de la persona
@@ -45,6 +54,9 @@ class FileSystem
         fclose($archivo);            // cierro el archivo
     }
 
+    /**
+     * Esta función sirve para mover un archivo en la carpeta temp a una carpeta del servidor
+     */
     public static function saveFileFromTemp($folderName, $index, $newName)
     {
         $return["error"] = true;

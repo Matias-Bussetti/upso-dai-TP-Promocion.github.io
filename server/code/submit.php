@@ -1,27 +1,22 @@
 <?php
-
-
-
-
 include_once('./class/FileSystem.php');
 include_once('./class/Validator.php');
 include_once('./class/Response.php');
 
-
-$json = file_get_contents('php://input');
-$data = json_decode($json);
-
+//Tomamos todos los datos pasados por post
 $request = $_POST;
 
+//Validaremos primero el documento
 $typesArray = [
     'document_type' => "select|require",
     'document_number' => "text|require",
 ];
 
+//Validamos el documento
 $validateInputs = Validator::validate($request, $typesArray);
 
-//Validar Documento
 if ($validateInputs["result"]) {
+    //Si se valido bien los datos del documento
 
     $fileName = $request['document_type'] . "_" . $request['document_number'];
     $fileNameJson = $fileName . ".json";
@@ -115,16 +110,3 @@ if ($validateInputs["result"]) {
     //Si document_type y document_number estan mal
     Response::response($validateInputs);
 }
-
-
-
-
-//TODO Si el documento ya existen no es necesario que se compruebe si hay imagen
-
-
-
-
-
-
-
-exit();
