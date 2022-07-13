@@ -70,6 +70,28 @@ window.onload = () => {
    *
    */
 
+  var form = document.getElementById("form");
+
+  form.onsubmit = (e) => {
+    e.preventDefault();
+  };
+
+  var firstStepInputs = [form[0], form[1], form[2], form[3], form[4], form[5]];
+  var firstStepButton = form[6];
+
+  var secondStepInputs = [form[7]];
+  var secondStepButton = form[8];
+
+  var thirdStepInputs = [form[9]];
+  var thirdStepButton = form[10];
+
+  var containerImage = document.getElementById("personal-image-container");
+  var containerCv = document.getElementById("personal-cv-container");
+
+  var allInputs = [...firstStepInputs, ...secondStepInputs, ...thirdStepInputs];
+
+  firstStepButton.onclick = () => firstStep();
+
   //* INICIO DRAG AND DROP
   //Prevenir que la página haga algo cuando la se lanza un archivo por equivocación
   document.ondrop = (event) => event.preventDefault();
@@ -94,40 +116,23 @@ window.onload = () => {
 
   //* FIN DRAG AND DROP
 
-  var form = document.getElementById("form");
-
-  form.onsubmit = (e) => {
-    e.preventDefault();
-  };
-
-  var firstStepInputs = [form[0], form[1], form[2], form[3], form[4], form[5]];
-  var firstStepButton = form[6];
-
-  var secondStepInputs = [form[7]];
-  var secondStepButton = form[8];
-
-  var thirdStepInputs = [form[9]];
-  var thirdStepButton = form[10];
-
-  var containerImage = document.getElementById("personal-image-container");
-  var containerCv = document.getElementById("personal-cv-container");
-
-  var allInputs = [...firstStepInputs, ...secondStepInputs, ...thirdStepInputs];
-
-  firstStepButton.onclick = () => firstStep();
-
   /**
    * Esta función se asignara a {@link firstStepButton} y ejecutara la función {@link fetchPostRequest}.Esta sera la primera validación en el servidor (firstStep.php), y se validaran los inputs {@link firstStepInputs}, si la validación fue correcta se ejecutara la función {@link firstStepHandler}
    */
   function firstStep() {
-    fetchPostRequest("firstStep.php", firstStepInputs, firstStepHandler);
+    fetchPostRequest("firstStep.php", form, firstStepInputs, firstStepHandler);
   }
 
   /**
    * Esta función se asignara a {@link secondStepButton} y ejecutara la función {@link fetchPostRequest}.Esta sera la segunda validación en el servidor (secondStep.php), y se validaran los inputs {@link secondStepInputs}, si la validación fue correcta se ejecutara la función {@link secondStepHandler}
    */
   function secondStep() {
-    fetchPostRequest("secondStep.php", secondStepInputs, secondStepHandler);
+    fetchPostRequest(
+      "secondStep.php",
+      form,
+      secondStepInputs,
+      secondStepHandler
+    );
   }
 
   /**
@@ -135,7 +140,7 @@ window.onload = () => {
    */
   function thirdStep(event) {
     event.preventDefault();
-    fetchPostRequest("thirdStep.php", thirdStepInputs, thirdStepHandler);
+    fetchPostRequest("thirdStep.php", form, thirdStepInputs, thirdStepHandler);
   }
 
   /**
@@ -143,7 +148,7 @@ window.onload = () => {
    */
   function submit(event) {
     event.preventDefault();
-    fetchPostRequest("submit.php", allInputs, postulationDone);
+    fetchPostRequest("submit.php", form, allInputs, postulationDone);
   }
 
   /**
