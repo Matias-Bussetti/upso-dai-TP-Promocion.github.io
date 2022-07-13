@@ -89,7 +89,7 @@ function elementDisableAttributeValue(element, disableValue) {
 
 //+ INICIO DRAG AND DROP
 
-function enableDrop(input, dropZone, container, allawedType) {
+function enableDropContainer(input, dropZone, container, allawedType) {
   //Animación sobre el contendor
   dropZone.ondragenter = (e) => onDragEnter(e);
   dropZone.ondragleave = (e) => onDragLeave(e);

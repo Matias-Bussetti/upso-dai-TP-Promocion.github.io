@@ -40,6 +40,9 @@ div.drag-enter {
   position: relative !important;
 }
 .overlay {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
   background-color: #000a;
   min-height: 400px;
 }
