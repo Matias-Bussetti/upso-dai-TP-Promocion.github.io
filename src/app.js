@@ -23,10 +23,10 @@ window.onload = () => {
    * - [2] Nombre
    * - [3] Apellido
    * - [4] Fecha de Nacimiento
-   * - [4] Email
-   * - [5] Puesto de Trabajo
-   * - [7] Imágen de perfil
-   * - [9] Curriculum (PDF)
+   * - [5] Email
+   * - [6] Puesto de Trabajo
+   * - [8] Imágen de perfil
+   * - [10] Curriculum (PDF)
    *
    * @typedef {HTMLElement[]} firstStepInputs Arreglo de los inputs del primer paso:
    * - [0] Tipo de Documento
