@@ -241,8 +241,11 @@ window.onload = () => {
     postulationDone();
   }
 
-  //TODO: HACER LA FINALIZACION DE LA POSTULACION
   function postulationDone() {
-    console.log("asdasd %c Salio TODO bien", "color:red;");
+    document.getElementById("alert").style.display = "block";
+    setTimeout(() => {
+      // console.log("a!!!! ./");
+      window.location.href = "./";
+    }, 2000);
   }
 };

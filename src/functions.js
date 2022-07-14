@@ -54,7 +54,7 @@ function handleResponse(response, validateInputs, callback) {
 
 //TODO: COMENTAR
 function handleError(err) {
-  //TODO: MOSTRAR UN MENSAJE SI SALIO UN ERROR BOOTSTAP TOAST
+  alert("Sucedio un error. Ver la consola para más información");
   console.error(err);
 }
 

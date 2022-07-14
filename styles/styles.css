@@ -50,6 +50,9 @@ div.drag-enter {
 a:hover {
   text-decoration: underline;
 }
+#alert {
+  display: none;
+}
 
 @keyframes dragEnter {
   0% {
