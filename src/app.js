@@ -22,6 +22,7 @@ window.onload = () => {
    * - [1] Número de Documento
    * - [2] Nombre
    * - [3] Apellido
+   * - [4] Fecha de Nacimiento
    * - [4] Email
    * - [5] Puesto de Trabajo
    * - [7] Imágen de perfil
@@ -32,8 +33,9 @@ window.onload = () => {
    * - [1] Número de Documento
    * - [2] Nombre
    * - [3] Apellido
-   * - [4] Email
-   * - [5] Puesto de Trabajo
+   * - [4] Fecha de Nacimiento
+   * - [5] Email
+   * - [6] Puesto de Trabajo
    *
    * @typedef {HTMLElement} firstStepButton Botón del primer paso (primer "Siguiente Paso").
    *
@@ -55,6 +57,7 @@ window.onload = () => {
    * - Número de Documento
    * - Nombre
    * - Apellido
+   * - Fecha de Nacimiento
    * - Email
    * - Puesto de Trabajo
    * - Imágen de perfil
@@ -76,14 +79,22 @@ window.onload = () => {
     e.preventDefault();
   };
 
-  var firstStepInputs = [form[0], form[1], form[2], form[3], form[4], form[5]];
-  var firstStepButton = form[6];
+  var firstStepInputs = [
+    form[0],
+    form[1],
+    form[2],
+    form[3],
+    form[4],
+    form[5],
+    form[6],
+  ];
+  var firstStepButton = form[7];
 
-  var secondStepInputs = [form[7]];
-  var secondStepButton = form[8];
+  var secondStepInputs = [form[8]];
+  var secondStepButton = form[9];
 
-  var thirdStepInputs = [form[9]];
-  var thirdStepButton = form[10];
+  var thirdStepInputs = [form[10]];
+  var thirdStepButton = form[11];
 
   var containerImage = document.getElementById("personal-image-container");
   var containerCv = document.getElementById("personal-cv-container");
@@ -180,8 +191,9 @@ window.onload = () => {
       form[1].value = response.data.document_number;
       form[2].value = response.data.name;
       form[3].value = response.data.last_name;
-      form[4].value = response.data.email;
-      form[5].value = response.data.job;
+      form[4].value = response.data.date;
+      form[5].value = response.data.email;
+      form[6].value = response.data.job;
       //1.2
       if (response.data.personal_image) {
         containerImage.src = response.data.personal_image;

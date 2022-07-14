@@ -45,6 +45,7 @@ if ($validateInputs["result"]) {
             'last_name' => "text|require",
             'email' => "text|require",
             'job' => "select|require",
+            'date' => "text|string",
         ];
 
         $validateInputs = Validator::validate($request, $typesArray);
