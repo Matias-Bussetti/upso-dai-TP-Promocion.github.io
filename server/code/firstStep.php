@@ -3,8 +3,11 @@ include_once('./class/FileSystem.php');
 include_once('./class/Validator.php');
 include_once('./class/Response.php');
 
+$json = file_get_contents('php://input');
+$request = json_decode($json);
+
 //Tomamos todos los datos pasados por post
-$request = $_POST;
+// $request = $_POST;
 
 //Creamos un arreglo con los inputs que queremos validar. 
 //input.name => validacion requerida
